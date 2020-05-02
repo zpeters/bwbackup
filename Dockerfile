@@ -8,4 +8,4 @@ WORKDIR /backup
 COPY backup.sh .
 RUN chmod +x backup.sh
 
-ENTRYPOINT "./backup.sh" $EMAIL $PASSWORD
+ENTRYPOINT /backup/backup.sh $EMAIL $PASSWORD $SLEEP
