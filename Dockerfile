@@ -1,5 +1,7 @@
-FROM node:alpine
+FROM alpine:edge
 
+RUN apk update 
+RUN apk add npm 
 RUN npm install -g @bitwarden/cli
 
 WORKDIR /backup
