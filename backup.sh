@@ -21,14 +21,16 @@ fi
 while true
 do
   echo ""
-  echo "Logging in to Bitwarden"
-  bw login $1 $2 > /dev/null 2>&1
+  if [[ "$SESSION" == "" ]] 
+  then
+    echo "Logging in to Bitwarden"
+    SESSION=`bw login $1 $2 |grep 'export BW_SESSION'|  awk '{split($0,a,"BW_SESSION"); print a[2]}'| cut -c 3- | rev | cut -c 2-| rev`
+  else
+    echo "Already logged in"
+  fi
   echo ""
   echo "Exporting Bitwarden data to /backups/"
   echo $2 | bw export $2  --output /backups/bitwarden_backup.json --format json
-  echo ""
-  echo "Logging out of Bitwarden"
-  bw logout
   echo ""
   echo "Sleeping $SLEEP seconds"
   sleep $SLEEP
